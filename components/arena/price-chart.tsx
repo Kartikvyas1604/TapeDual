@@ -11,6 +11,7 @@ interface PriceChartProps {
 }
 
 export function PriceChart({ symbol, price, loading }: PriceChartProps) {
+  const [points, setPoints] = useState<number[]>([]);
   if (loading) return <PriceChartSkeleton loading />;
   if (points.length === 0) return null;
 
