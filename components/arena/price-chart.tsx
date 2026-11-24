@@ -66,9 +66,10 @@ export function PriceChart({ symbol, price, loading }: PriceChartProps) {
   return (
     <div className="flex flex-col h-full">
       <svg
-        width={width}
-        height={height}
-        className="block w-full h-[200px] mx-auto"
+        width="100%"
+        height={200}
+        viewBox="0 0 560 200"
+        className="block w-full max-w-[560px] mx-auto"
         role="img"
         aria-label={`${symbol} live price chart`}
       >
