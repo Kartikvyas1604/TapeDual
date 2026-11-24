@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, Clock, TrendingUp, Wifi } from "lucide-react";
+import { Activity, Clock, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface TopBarProps {
@@ -55,7 +55,7 @@ export function TopBar({
 
         <div className="flex items-center justify-between gap-4 sm:gap-6 px-1">
           <div className="flex items-center gap-1 text-xs font-mono">
-            <Wifi className="h-3 w-3 text-primary" aria-hidden />
+            <span className="relative h-2 w-2 rounded-full bg-primary animate-pulse" aria-label="live" />
             <span className="text-muted-foreground">PER connected</span>
           </div>
 
