@@ -12,6 +12,7 @@ export interface ArenaState {
   secondsLeft: number;
   balance: string;
   connected: boolean;
+  isLoading: boolean;
   onConnect: () => void;
   onSessionKeys: () => void;
   openBucketDialog: () => void;
@@ -28,6 +29,7 @@ export function useArena(): ArenaState {
   const [volatility, setVolatility] = useState(VOLATILITY_BASE);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Simulate a live price + volatility feed (Pyth Lazer equivalent).
   useEffect(() => {
@@ -40,6 +42,12 @@ export function useArena(): ArenaState {
       setVolatility(VOLATILITY_BASE + Math.floor(Math.random() * 40) - 20);
     }, 1200);
     return () => clearInterval(interval);
+  }, []);
+
+  // Resolve initial loading after the first price tick so the skeleton shows.
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 900);
+    return () => clearTimeout(timer);
   }, []);
 
   // 60-second round countdown.
@@ -72,6 +80,7 @@ export function useArena(): ArenaState {
     secondsLeft,
     balance,
     connected,
+    isLoading,
     onConnect,
     onSessionKeys,
     openBucketDialog,

@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 
+import { PriceChartSkeleton } from "@/components/arena/states";
+
 interface PriceChartProps {
   symbol: string;
   price: string;
+  loading?: boolean;
 }
 
-export function PriceChart({ symbol, price }: PriceChartProps) {
-  const [points, setPoints] = useState<number[]>([]);
+export function PriceChart({ symbol, price, loading }: PriceChartProps) {
+  if (loading) return <PriceChartSkeleton loading />;
+  if (points.length === 0) return null;
 
   useEffect(() => {
     const base = parseFloat(price);

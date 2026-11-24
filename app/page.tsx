@@ -16,6 +16,7 @@ export default function ArenaPage() {
     secondsLeft,
     balance,
     connected,
+    isLoading,
     onConnect,
     onSessionKeys,
     openBucketDialog,
@@ -60,7 +61,7 @@ export default function ArenaPage() {
                 </div>
               </div>
               <div className="p-6 lg:p-8">
-                <PriceChart symbol={symbol} price={price} />
+                <PriceChart symbol={symbol} price={price} loading={isLoading} />
               </div>
             </section>
 
