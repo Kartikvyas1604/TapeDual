@@ -59,7 +59,7 @@ export function TopBar({
             <span className="relative h-2 w-2 rounded-full bg-primary animate-pulse" aria-label="live" />
             <span className="text-muted-foreground">PER connected</span>
           </div>
-          <ThemeToggle className="ml-2" />
+          <ThemeToggle />
 
           <div className="flex items-center gap-6">
             <div className="text-right hidden sm:block">
