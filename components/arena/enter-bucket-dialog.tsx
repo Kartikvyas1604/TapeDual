@@ -44,10 +44,10 @@ export function EnterBucketDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogTrigger>
-        <Button variant="outline" size="sm">
-          Enter bucket
-        </Button>
+      <DialogTrigger
+        className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 outline-none select-none data-[state=open]:bg-muted"
+      >
+        Enter bucket
       </DialogTrigger>
       <DialogContent className="sm:max-w-[420px]">
         <DialogHeader>
