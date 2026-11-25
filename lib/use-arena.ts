@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 // Mock live-data feed for the devnet arena demo.
 // In production this connects to Pyth Lazer + MagicBlock ER via adapters.
@@ -82,6 +83,9 @@ export function useArena(): ArenaState {
   const enterPosition = useCallback((bucket: Bucket, stake: string) => {
     setPosition({ bucket, stake });
     setIsDialogOpen(false);
+    toast.success("Position entered", {
+      description: `${stake} USDC on ${bucket}`,
+    });
   }, []);
 
   return {

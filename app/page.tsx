@@ -11,6 +11,7 @@ import { ConvictionButtons } from "@/components/arena/conviction-buttons";
 import { JudgePanel } from "@/components/arena/judge-panel";
 import { EnterBucketDialog } from "@/components/arena/enter-bucket-dialog";
 import { useArena } from "@/lib/use-arena";
+import { toast } from "sonner";
 
 export default function ArenaPage() {
   const reduceMotion = useReducedMotion();
