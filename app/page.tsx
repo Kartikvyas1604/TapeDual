@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { TopBar } from "@/components/arena/top-bar";
 import { WalletBar } from "@/components/arena/wallet-bar";
@@ -12,6 +13,14 @@ import { EnterBucketDialog } from "@/components/arena/enter-bucket-dialog";
 import { useArena } from "@/lib/use-arena";
 
 export default function ArenaPage() {
+  const reduceMotion = useReducedMotion();
+  const baseEnter = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.4 },
+      };
   const {
     symbol,
     price,
@@ -52,8 +61,23 @@ export default function ArenaPage() {
       />
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6 md:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-8 space-y-6">
+        <motion.div
+          {...baseEnter}
+          transition={{
+            ...baseEnter.transition,
+            duration: 0.4,
+          }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6"
+        >
+          <motion.div
+            {...baseEnter}
+            transition={{
+              ...baseEnter.transition,
+              duration: 0.5,
+              delay: 0.08,
+            }}
+            className="lg:col-span-8 space-y-6"
+          >
             <section className="rounded-xl border border-border bg-card shadow-sm">
               <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border/50">
                 <h2 className="text-sm font-semibold text-foreground tracking-tight">
@@ -119,12 +143,20 @@ export default function ArenaPage() {
                 weight — act early.
               </p>
             </section>
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-4 space-y-6">
+          <motion.div
+            {...baseEnter}
+            transition={{
+              ...baseEnter.transition,
+              duration: 0.5,
+              delay: 0.16,
+            }}
+            className="lg:col-span-4 space-y-6"
+          >
             <JudgePanel />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
 
       <EnterBucketDialog
