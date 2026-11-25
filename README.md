@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TapeDuel
 
-## Getting Started
+**60-second sealed-state tokenized stock vs. USDC trading arena on MagicBlock Private Ephemeral Rollups.**
 
-First, run the development server:
+Early conviction and live volatility warp your payout multiplier — with zero house LVR risk and atomic L1 settlement.
+
+Built for Solana Blitz V10 — Entertainment Finance.
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack) + TypeScript
+- **Tailwind CSS v4** + shadcn/ui (Base UI / Nova preset)
+- **lucide-react** icons
+- **Geist Sans / Geist Mono** via `next/font`
+- Solana Devnet + MagicBlock PER / ER / VRF + Pyth Lazer (Anchor program, separate Rust workspace)
+
+## Brand
+
+Midnight Signal — `oklch`-based dark-first palette (technical · serious · trustworthy).
+Tokens live in `app/globals.css`; full spec in `brand.md`.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (Turbopack)
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Arena flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Connect a wallet (devnet USDC).
+2. Enable 1-click Session Keys (gasless ER tx, <50 ms).
+3. Pick a bucket — DOWN / FLAT / UP — and stake USDC ($1–$500).
+4. Position is sealed inside the MagicBlock PER until round close (60 s).
+5. At round close, Pyth Lazer locks the settlement price, VRF rolls the Golden Ticket bonus, and `MagicIntentBundleBuilder` settles atomically to L1.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+app/
+  page.tsx          # single-screen Arena
+  globals.css       # Midnight Signal tokens (+ shadcn base)
+  layout.tsx        # Geist fonts + TooltipProvider
+components/
+  arena/
+    top-bar.tsx         # live ticker, volatility, countdown
+    wallet-bar.tsx      # USDC balance, connect, session keys
+    countdown-ring.tsx  # 60s round ring
+    price-chart.tsx     # live SVG price chart (+ skeleton)
+    conviction-buttons.tsx  # DOWN / FLAT / UP entry
+    judge-panel.tsx     # proof-first verification panel
+    enter-bucket-dialog.tsx # stake + confirm modal
+    states.tsx          # loading / empty / error states
+lib/
+  use-arena.ts          # mock live-data feed + position state
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The frontend uses a mock live-data feed (Pyth Lazer equivalent) for the demo loop. Production wires the Anchor program via adapters in `config/addresses.ts`.
+- UI copy avoids banned wording ("guaranteed profit", "risk-free", "gambling", etc.) per `agent/Agent.md`.
