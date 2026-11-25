@@ -38,7 +38,7 @@ export function TopBar({
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+            <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
               live
             </span>
             <Badge

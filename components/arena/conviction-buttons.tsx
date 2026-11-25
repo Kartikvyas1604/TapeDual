@@ -27,7 +27,7 @@ function ConvictionButton({
       onClick={onSelect}
       variant="default"
       size="lg"
-      className={`w-full py-6 text-left group relative overflow-hidden ${
+      className={`w-full min-h-[52px] py-6 text-left group relative overflow-hidden ${
         decayed
           ? "opacity-60 pointer-events-none"
           : "hover:bg-primary/90 hover:shadow-[0_0_20px_oklch(0.72_0.17_250/_0.35)]"
