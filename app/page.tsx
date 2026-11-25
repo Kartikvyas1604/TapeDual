@@ -61,7 +61,7 @@ export default function ArenaPage() {
         onSessionKeys={onSessionKeys}
       />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6 md:px-6 lg:px-8">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6 md:px-6 lg:px-8 pb-[env(safe-area-inset-bottom)]">
         <motion.div
           {...baseEnter}
           transition={{
