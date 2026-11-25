@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { TopBar } from "@/components/arena/top-bar";
 import { WalletBar } from "@/components/arena/wallet-bar";
 import { CountdownRing } from "@/components/arena/countdown-ring";
@@ -17,12 +21,18 @@ export default function ArenaPage() {
     balance,
     connected,
     isLoading,
+    position,
     onConnect,
     onSessionKeys,
     openBucketDialog,
+    enterPosition,
     isDialogOpen,
     setIsDialogOpen,
   } = useArena();
+
+  const [selectedBucket, setSelectedBucket] = useState<"DOWN" | "FLAT" | "UP">(
+    "UP"
+  );
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -77,7 +87,32 @@ export default function ArenaPage() {
                 </div>
                 <CountdownRing secondsLeft={secondsLeft} className="w-14 h-14" />
               </div>
-              <ConvictionButtons onSelect={openBucketDialog} />
+              <ConvictionButtons
+                onSelect={(bucket) => {
+                  setSelectedBucket(bucket);
+                  openBucketDialog();
+                }}
+              />
+              {position && (
+                <div className="mt-4 rounded-lg border border-border bg-muted/50 p-3">
+                  <div className="flex items-center justify-between gap-3 text-xs">
+                    <span className="font-mono text-muted-foreground uppercase tracking-wider">
+                      Your position
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="font-mono tabular-nums font-semibold text-foreground">
+                        {position.stake} USDC
+                      </span>
+                      <span className="font-mono text-muted-foreground">
+                        on {position.bucket}
+                      </span>
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Sealed inside the PER until round close.
+                  </p>
+                </div>
+              )}
               <p className="mt-4 text-xs text-muted-foreground">
                 Positions are sealed inside a MagicBlock Private Ephemeral
                 Rollup until round close. Early entry decays your conviction
@@ -94,8 +129,9 @@ export default function ArenaPage() {
 
       <EnterBucketDialog
         isOpen={isDialogOpen}
+        defaultBucket={selectedBucket}
         onClose={() => setIsDialogOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={(bucket, stake) => enterPosition(bucket, stake)}
       />
     </div>
   );

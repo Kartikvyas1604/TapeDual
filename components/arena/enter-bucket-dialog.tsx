@@ -22,6 +22,7 @@ interface EnterBucketDialogProps {
   onClose: () => void;
   onConfirm: (bucket: Bucket, stake: string) => void;
   isOpen: boolean;
+  defaultBucket?: Bucket;
 }
 
 const BUCKETS: Array<{ value: Bucket; label: string }> = [
@@ -34,8 +35,9 @@ export function EnterBucketDialog({
   onClose,
   onConfirm,
   isOpen,
+  defaultBucket = "UP",
 }: EnterBucketDialogProps) {
-  const [bucket, setBucket] = useState<Bucket>("UP");
+  const [bucket, setBucket] = useState<Bucket>(defaultBucket);
   const [stake, setStake] = useState("10.00");
   const numericStake = parseFloat(stake);
   const validStake = !isNaN(numericStake) && numericStake >= 1 && numericStake <= 500;

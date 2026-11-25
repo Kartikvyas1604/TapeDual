@@ -4,6 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 // Mock live-data feed for the devnet arena demo.
 // In production this connects to Pyth Lazer + MagicBlock ER via adapters.
+
+type Bucket = "DOWN" | "FLAT" | "UP";
+
 export interface ArenaState {
   symbol: string;
   price: string;
@@ -13,9 +16,11 @@ export interface ArenaState {
   balance: string;
   connected: boolean;
   isLoading: boolean;
+  position: { bucket: Bucket; stake: string } | null;
   onConnect: () => void;
   onSessionKeys: () => void;
   openBucketDialog: () => void;
+  enterPosition: (bucket: Bucket, stake: string) => void;
   isDialogOpen: boolean;
   setIsDialogOpen: (open: boolean) => void;
 }
@@ -64,6 +69,8 @@ export function useArena(): ArenaState {
     return `${delta >= 0 ? "+" : ""}${delta.toFixed(2)}%`;
   }, [price]);
 
+  const [position, setPosition] = useState<{ bucket: Bucket; stake: string } | null>(null);
+
   const balance = useMemo(() => "1,250.00", []);
 
   const onConnect = useCallback(() => setConnected(true), []);
@@ -71,6 +78,11 @@ export function useArena(): ArenaState {
     setConnected(true);
   }, []);
   const openBucketDialog = useCallback(() => setIsDialogOpen(true), []);
+
+  const enterPosition = useCallback((bucket: Bucket, stake: string) => {
+    setPosition({ bucket, stake });
+    setIsDialogOpen(false);
+  }, []);
 
   return {
     symbol: "NVDAx",
@@ -81,9 +93,11 @@ export function useArena(): ArenaState {
     balance,
     connected,
     isLoading,
+    position,
     onConnect,
     onSessionKeys,
     openBucketDialog,
+    enterPosition,
     isDialogOpen,
     setIsDialogOpen,
   };
